@@ -12,4 +12,12 @@ public interface RestaurantService {
     List<Restaurant> getAll();
 
     List<Vote> getVotes();
+
+    Restaurant getByID(int id);
+
+    Restaurant create(Restaurant restaurant);
+
+    int update(Restaurant restaurant, int id);
+
+    int delete(int id);
 }
