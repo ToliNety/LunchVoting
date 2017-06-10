@@ -44,6 +44,7 @@
 
         <!--Tools-->
         <ehcache.version>2.10.3</ehcache.version>
+        <lombock.version>1.16.16</lombock.version>
     </properties>
 
     <build>
@@ -89,6 +90,13 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombock.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!--JSON-->

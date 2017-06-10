@@ -17,7 +17,7 @@ public interface RestaurantService {
 
     Restaurant create(Restaurant restaurant);
 
-    int update(Restaurant restaurant, int id);
+    Restaurant update(Restaurant restaurant, int id);
 
     int delete(int id);
 }

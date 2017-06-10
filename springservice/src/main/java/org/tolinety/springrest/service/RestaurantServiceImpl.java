@@ -2,10 +2,12 @@ package org.tolinety.springrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.tolinety.springrest.model.Restaurant;
 import org.tolinety.springrest.model.Vote;
 import org.tolinety.springrest.repository.CrudRestaurantRepository;
 import org.tolinety.springrest.repository.VotesRepository;
+import org.tolinety.springrest.util.ValidationUtil;
 
 import java.util.List;
 
@@ -27,20 +29,20 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getByID(int id) {
-        //TODO Add data from repo
-        return null;
+        return restaurantRepository.findOne(id);
     }
 
     @Override
     public Restaurant create(Restaurant restaurant) {
-        //TODO add data to repo
-        return null;
+        Assert.notNull(restaurant, "Restaurant must not be null");
+        ValidationUtil.checkNew(restaurant);
+        return restaurantRepository.save(restaurant);
     }
 
     @Override
-    public int update(Restaurant restaurant, int id) {
-        //TODO add data update in repo
-        return 0;
+    public Restaurant update(Restaurant restaurant, int id) {
+        Assert.notNull(restaurant, "Restaurant must not be null");
+        return ValidationUtil.checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.getId());
     }
 
     @Override

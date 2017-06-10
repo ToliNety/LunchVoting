@@ -45,13 +45,13 @@ public class RESTController {
     }
 
     @PutMapping(value = REST_URL + "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public int updateRestaurant(@RequestBody Restaurant restaurant, @PathVariable int id) {
-        return restaurantService.update(restaurant, id);
+    public void updateRestaurant(@RequestBody Restaurant restaurant, @PathVariable int id) {
+        restaurantService.update(restaurant, id);
     }
 
     @DeleteMapping(value = REST_URL + "{id}")
-    public int deleteRestaurant(@PathVariable int id){
-        return restaurantService.delete(id);
+    public void deleteRestaurant(@PathVariable int id) {
+        restaurantService.delete(id);
     }
 
 
