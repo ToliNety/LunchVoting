@@ -3,6 +3,7 @@ package org.tolinety.springrest.service;
 import org.tolinety.springrest.model.Restaurant;
 import org.tolinety.springrest.model.Vote;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -11,13 +12,11 @@ import java.util.List;
 public interface RestaurantService {
     List<Restaurant> getAll();
 
-    List<Vote> getVotes();
-
     Restaurant getByID(int id);
 
     Restaurant create(Restaurant restaurant);
 
-    Restaurant update(Restaurant restaurant, int id);
+    Restaurant update(Restaurant restaurant);
 
-    int delete(int id);
+    void delete(int id);
 }

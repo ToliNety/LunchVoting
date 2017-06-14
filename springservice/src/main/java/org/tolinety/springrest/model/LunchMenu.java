@@ -19,8 +19,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@NamedEntityGraph(name = LunchMenu.WITH_DATA, attributeNodes = {
+        @NamedAttributeNode("restaurant"),
+        @NamedAttributeNode("dishes")})
 public class LunchMenu extends BaseEntity {
-    @ManyToOne(fetch = FetchType.EAGER)
+    public static final String WITH_DATA = "LunchMenu.withAllData";
+
+    @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     @JsonIgnore
     private Restaurant restaurant;
@@ -29,7 +34,7 @@ public class LunchMenu extends BaseEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate registered;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinTable(
             name = "menus",
             joinColumns = @JoinColumn(name = "lunch_id", referencedColumnName = "id"),

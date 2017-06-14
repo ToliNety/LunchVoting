@@ -32,16 +32,19 @@ INSERT INTO dishes (dish_name, dish_price) VALUES
   ('Dish2R2', 10);
 
 -- lunch_menus
-INSERT INTO lunch_menus (restaurant_id)
-  SELECT restaurants.id
-  FROM restaurants;
+INSERT INTO lunch_menus (restaurant_id, registered) VALUES
+  (100002, '2017-06-13'),
+  (100003, '2017-06-13'),
+  (100002, '2017-06-12');
 
 -- menus
 INSERT INTO menus (lunch_id, dish_id) VALUES
   (100008, 100004),
   (100008, 100005),
   (100009, 100006),
-  (100009, 100007);
+  (100009, 100007),
+  (100010, 100005),
+  (100010, 100006);
 
 -- votes
 INSERT INTO votes (restaurant_id, user_id) VALUES
@@ -49,5 +52,5 @@ INSERT INTO votes (restaurant_id, user_id) VALUES
   (100002, 100001);
 
 INSERT INTO votes (restaurant_id, user_id, registered) VALUES
-  (100003, 100000, '2017-03-05'),
-  (100003, 100001, '2017-03-05');
+  (100003, 100000, '2017-06-13'),
+  (100003, 100001, '2017-06-13');
