@@ -18,7 +18,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 @Table(name = "restaurants", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name", name = "restaurant_name_idx")})
 @Data
-@AllArgsConstructor()
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Restaurant extends BaseEntity {

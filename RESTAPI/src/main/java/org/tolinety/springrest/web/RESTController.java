@@ -16,24 +16,24 @@ import java.util.List;
  * Created by ToliNeTy on 04.03.2017.
  */
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RESTController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RESTController {
-    private static final String REST_URL = "/restaurants";
+    static final String REST_URL = "/restaurants";
 
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping(value = REST_URL)
+    @GetMapping
     public List<Restaurant> getRestaurants() {
         return restaurantService.getAll();
     }
 
-    @GetMapping(value = REST_URL + "/{id}")
+    @GetMapping(value = "{id}")
     public Restaurant getRestaurant(@PathVariable int id) {
         return restaurantService.getByID(id);
     }
 
-    @PostMapping(value = REST_URL, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant restaurant) {
         Restaurant created = restaurantService.create(restaurant);
 
@@ -44,21 +44,13 @@ public class RESTController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = REST_URL + "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateRestaurant(@RequestBody Restaurant restaurant, @PathVariable int id) {
-        restaurantService.update(restaurant, id);
+        restaurantService.update(restaurant);
     }
 
-    @DeleteMapping(value = REST_URL + "{id}")
+    @DeleteMapping(value = "{id}")
     public void deleteRestaurant(@PathVariable int id) {
         restaurantService.delete(id);
     }
-
-
-    @GetMapping(value = "/votes")
-    public List<Vote> getVotes() {
-        return restaurantService.getVotes();
-    }
-
-
 }

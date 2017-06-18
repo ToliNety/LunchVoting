@@ -10,13 +10,12 @@ import org.tolinety.springrest.util.NotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.tolinety.springrest.RestaurantTestData.*;
+import static org.tolinety.springrest.testdata.RestaurantTestData.*;
 
 /**
  * Created by tolin on 13.06.2017.
  */
 @Slf4j
-@Transactional
 public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired

@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS menus;
-DROP TABLE IF EXISTS lunch_menus;
 DROP TABLE IF EXISTS votes;
-DROP TABLE IF EXISTS restaurants;
 DROP TABLE IF EXISTS dishes;
+DROP TABLE IF EXISTS lunch_menus;
+DROP TABLE IF EXISTS restaurants;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS global_seq;
@@ -19,9 +19,12 @@ CREATE UNIQUE INDEX restaurant_name_idx
 
 CREATE TABLE dishes
 (
-  id         INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('global_seq'),
-  dish_name  VARCHAR             NOT NULL,
-  dish_price INTEGER             NOT NULL
+  id            INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('global_seq'),
+  dish_name     VARCHAR             NOT NULL,
+  dish_price    INTEGER             NOT NULL,
+  restaurant_id INTEGER             NOT NULL,
+  deleted       BOOL                         DEFAULT FALSE,
+  FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );
 
 CREATE TABLE lunch_menus
@@ -53,6 +56,7 @@ CREATE TABLE users
   registered TIMESTAMP NOT NULL     DEFAULT now(),
   enabled    BOOL                   DEFAULT TRUE
 );
+
 CREATE UNIQUE INDEX users_unique_email_idx
   ON users (email);
 
@@ -64,14 +68,13 @@ CREATE TABLE user_roles
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-
 CREATE TABLE votes
 (
-  id            INTEGER PRIMARY KEY  DEFAULT nextval('global_seq'),
-  restaurant_id INTEGER NOT NULL,
-  user_id       INTEGER NOT NULL,
-  registered    DATE    NOT NULL     DEFAULT current_date,
+  id         INTEGER PRIMARY KEY  DEFAULT nextval('global_seq'),
+  lunch_id   INTEGER NOT NULL,
+  user_id    INTEGER NOT NULL,
+  registered DATE    NOT NULL     DEFAULT current_date,
   CONSTRAINT votes_idx UNIQUE (user_id, registered),
-  FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE,
+  FOREIGN KEY (lunch_id) REFERENCES lunch_menus (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

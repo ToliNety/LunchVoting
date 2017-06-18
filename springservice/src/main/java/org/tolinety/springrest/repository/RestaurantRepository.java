@@ -14,7 +14,7 @@ import java.util.List;
  * Created by ToliNeTy on 04.03.2017.
  */
 @Transactional(readOnly = true)
-public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     @Modifying
     @Transactional
     int deleteById(int id);

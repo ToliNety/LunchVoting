@@ -1,8 +1,8 @@
 DELETE FROM menus;
 DELETE FROM votes;
+DELETE FROM dishes;
 DELETE FROM lunch_menus;
 DELETE FROM restaurants;
-DELETE FROM dishes;
 DELETE FROM users;
 DELETE FROM user_roles;
 
@@ -25,11 +25,11 @@ INSERT INTO restaurants (name) VALUES
   ('Restaurant2');
 
 -- menus
-INSERT INTO dishes (dish_name, dish_price) VALUES
-  ('Dish1R1', 100),
-  ('Dish2R1', 200),
-  ('Dish1R2', 150),
-  ('Dish2R2', 10);
+INSERT INTO dishes (dish_name, dish_price, restaurant_id) VALUES
+  ('Dish1R1', 100, 100002),
+  ('Dish2R1', 200, 100002),
+  ('Dish1R2', 150, 100003),
+  ('Dish2R2', 10, 100003);
 
 -- lunch_menus
 INSERT INTO lunch_menus (restaurant_id, registered) VALUES
@@ -43,14 +43,14 @@ INSERT INTO menus (lunch_id, dish_id) VALUES
   (100008, 100005),
   (100009, 100006),
   (100009, 100007),
-  (100010, 100005),
-  (100010, 100006);
+  (100010, 100004),
+  (100010, 100005);
 
 -- votes
-INSERT INTO votes (restaurant_id, user_id) VALUES
-  (100002, 100000),
-  (100002, 100001);
+INSERT INTO votes (lunch_id, user_id) VALUES
+  (100010, 100000),
+  (100010, 100001);
 
-INSERT INTO votes (restaurant_id, user_id, registered) VALUES
-  (100003, 100000, '2017-06-13'),
-  (100003, 100001, '2017-06-13');
+INSERT INTO votes (lunch_id, user_id, registered) VALUES
+  (100008, 100000, '2017-06-13'),
+  (100009, 100001, '2017-06-13');

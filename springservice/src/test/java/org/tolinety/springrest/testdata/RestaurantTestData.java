@@ -1,5 +1,6 @@
-package org.tolinety.springrest;
+package org.tolinety.springrest.testdata;
 
+import org.tolinety.springrest.ModelMatcher;
 import org.tolinety.springrest.model.Restaurant;
 
 import java.util.Arrays;
