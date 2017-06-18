@@ -12,7 +12,7 @@ import java.util.List;
 public interface RestaurantService {
     List<Restaurant> getAll();
 
-    Restaurant getByID(int id);
+    Restaurant get(int id);
 
     Restaurant create(Restaurant restaurant);
 

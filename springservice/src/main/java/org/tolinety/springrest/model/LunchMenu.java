@@ -46,7 +46,7 @@ public class LunchMenu extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "dish_id", referencedColumnName = "id"))
     private List<Dish> dishes;
 
-    public LunchMenu(Integer id, LocalDate registered, Restaurant restaurant) {
+    public LunchMenu(Integer id, Restaurant restaurant, LocalDate registered) {
         this(restaurant, registered, Collections.emptyList());
         this.setId(id);
     }
@@ -56,6 +56,7 @@ public class LunchMenu extends BaseEntity {
         return MoreObjects.toStringHelper(this)
                 .add("id", getId())
                 .add("registered", registered)
+                .add("restaurant", restaurant.getId())
                 .toString();
     }
 }

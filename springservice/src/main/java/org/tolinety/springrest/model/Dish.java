@@ -1,5 +1,7 @@
 package org.tolinety.springrest.model;
 
+import com.google.common.base.MoreObjects;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "dishes")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Dish extends BaseEntity {
@@ -31,4 +34,28 @@ public class Dish extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
+    public Dish(Integer id, String dishName, int dishPrice, Restaurant restaurant) {
+        this(id, dishName, dishPrice, false, restaurant);
+    }
+
+    public Dish(Integer id, String dishName, int dishPrice, boolean deleted, Restaurant restaurant) {
+        this(dishName, dishPrice, deleted, restaurant);
+        this.setId(id);
+    }
+
+    public static Dish of(Dish dish) {
+        return new Dish(null, dish.getDishName(), dish.getDishPrice(), dish.getRestaurant());
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", getId())
+                .add("dishName", dishName)
+                .add("dishPrice", dishPrice)
+                .add("deleted", deleted)
+                .add("restaurant", restaurant.getId())
+                .toString();
+    }
 }

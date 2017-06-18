@@ -14,4 +14,8 @@ public interface DishService {
     Dish create (Dish dish, int restaurantId);
 
     Dish update (Dish dish, int restaurantId);
+
+    Dish get (int id);
+
+    int delete(int id);
 }

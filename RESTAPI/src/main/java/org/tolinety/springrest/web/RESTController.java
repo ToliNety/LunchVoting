@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.tolinety.springrest.model.Restaurant;
-import org.tolinety.springrest.model.Vote;
 import org.tolinety.springrest.service.RestaurantService;
 
 import java.net.URI;
@@ -30,7 +29,7 @@ public class RESTController {
 
     @GetMapping(value = "{id}")
     public Restaurant getRestaurant(@PathVariable int id) {
-        return restaurantService.getByID(id);
+        return restaurantService.get(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

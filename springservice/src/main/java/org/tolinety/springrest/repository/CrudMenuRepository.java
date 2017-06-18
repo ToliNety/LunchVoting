@@ -12,12 +12,13 @@ import java.util.List;
 /**
  * Created by tolin on 14.06.2017.
  */
+@Transactional(readOnly = true)
 public interface CrudMenuRepository extends JpaRepository<LunchMenu, Integer> {
     @EntityGraph(value = LunchMenu.WITH_DATA)
     List<LunchMenu> getDistinctByRegistered(LocalDate date);
 
     @EntityGraph(value = LunchMenu.WITH_DATA)
-    LunchMenu getById (int id);
+    LunchMenu getById(int id);
 
     @Modifying
     @Transactional

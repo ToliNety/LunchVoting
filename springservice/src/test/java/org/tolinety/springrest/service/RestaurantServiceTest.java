@@ -3,7 +3,6 @@ package org.tolinety.springrest.service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.tolinety.springrest.model.Restaurant;
 import org.tolinety.springrest.util.NotFoundException;
 
@@ -22,68 +21,73 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     RestaurantService service;
 
     @Test
-    public void getAll() throws Exception {
+    public void testGetAll() throws Exception {
         List<Restaurant> restaurants = service.getAll();
         log.info("From DB: " + restaurants.toString());
         MATCHER.assertCollectionEquals(RESTAURANTS, restaurants);
     }
 
     @Test
-    public void getByID() throws Exception {
-        Restaurant current = service.getByID(RESTAURANT1_ID);
+    public void testGet() throws Exception {
+        Restaurant current = service.get(RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(current));
         MATCHER.assertEquals(RESTAURANT1, current);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void getByIDNotFound() throws Exception {
-        service.getByID(RESTAURANT1_ID + 5);
+    @Test
+    public void testGetNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        service.get(RESTAURANT1_ID + 5);
     }
 
     @Test
-    public void create() throws Exception {
+    public void testCreate() throws Exception {
         Restaurant created = service.create(CREATED);
         log.info("From DB: " + String.valueOf(created));
         CREATED.setId(created.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(RESTAURANT1, RESTAURANT2, CREATED), service.getAll());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void createBadID() throws Exception {
-        CREATED.setId(RESTAURANT1_ID + 5);
-        service.create(CREATED);
+    @Test
+    public void testCreateBadID() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        service.create(new Restaurant(RESTAURANT1_ID, "test"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void createWithNull() throws Exception {
+    @Test
+    public void testCreateWithNull() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
         service.create(null);
     }
 
     @Test
-    public void update() throws Exception {
+    public void testUpdate() throws Exception {
         Restaurant update = service.update(UPDATED);
         log.info("From DB: " + String.valueOf(update));
         MATCHER.assertCollectionEquals(Arrays.asList(RESTAURANT2, UPDATED), service.getAll());
     }
 
-    @Test(expected = NotFoundException.class)
-    public void updateNotFound() throws Exception {
+    @Test
+    public void testUpdateNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
         service.update(UPDATED_BAD_ID);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void updateWithNull() throws Exception {
+    @Test
+    public void testUpdateWithNull() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
         service.update(null);
     }
 
     @Test
-    public void delete() throws Exception {
+    public void testDelete() throws Exception {
         service.delete(RESTAURANT1_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(RESTAURANT2), service.getAll());
     }
 
-    @Test(expected = NotFoundException.class)
-    public void deleteNotFound() throws Exception {
+    @Test
+    public void testDeleteNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
         service.delete(RESTAURANT1_ID + 5);
     }
 }

@@ -26,7 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant getByID(int id) {
+    public Restaurant get(int id) {
         return checkNotFoundWithId(restaurantRepository.findOne(id), id);
     }
 
@@ -40,7 +40,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "Restaurant mustn't be null");
-        checkNotFoundWithId(getByID(restaurant.getId()), restaurant.getId());
+        checkNotFoundWithId(get(restaurant.getId()), restaurant.getId());
         return restaurantRepository.save(restaurant);
     }
 

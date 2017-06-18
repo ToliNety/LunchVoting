@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.tolinety.springrest.testdata.MenuTestData.*;
+import static org.tolinety.springrest.testdata.RestaurantTestData.RESTAURANT1;
 import static org.tolinety.springrest.testdata.RestaurantTestData.RESTAURANT1_ID;
 
 /**
@@ -24,7 +25,7 @@ public class MenuServiceTest extends AbstractServiceTest {
     MenuService service;
 
     @Test
-    public void getByDate() throws Exception {
+    public void testGetByDate() throws Exception {
         List<LunchMenu> menus = service.getWithDataByDate(LocalDate.of(2017, 06, 13));
         logoutMenuWithRestaurantAndDishes(menus);
         MATCHER.assertCollectionEquals(Arrays.asList(MENU1, MENU2), menus);
@@ -34,71 +35,93 @@ public class MenuServiceTest extends AbstractServiceTest {
         MATCHER.assertCollectionEquals(Arrays.asList(MENU3), menus);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getWithNullDate() throws Exception {
+    @Test
+    public void testGetWithNullDate() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
         service.getWithDataByDate(null);
     }
 
     @Test
-    public void get() throws Exception {
+    public void testGet() throws Exception {
         LunchMenu menu = service.get(MENU_ID);
         log.info("From DB: " + String.valueOf(menu));
         MATCHER.assertEquals(MENU1, menu);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void getByBadId() throws Exception {
+    @Test
+    public void testGetByBadId() throws Exception {
+        thrown.expect(NotFoundException.class);
         service.get(MENU_ID + 5);
     }
 
     @Test
-    public void create() throws Exception {
+    public void testCreate() throws Exception {
         LunchMenu created = service.create(CREATED, RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(created));
+        LunchMenu getted = service.get(created.getId());
+        log.info("From DB with dishes: " + String.valueOf(getted) + " Dishes: " + getted.getDishes());
         CREATED.setId(created.getId());
-        MATCHER.assertEquals(CREATED, service.get(created.getId()));
+        MATCHER.assertEquals(CREATED, created);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void createWithNull() throws Exception {
+    @Test
+    public void testCreateWithBadDishes() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        LunchMenu created = service.create(CREATED_BAD_DISHES, RESTAURANT1_ID);
+    }
+
+    @Test
+    public void testCreateWithNull() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
         service.create(null, RESTAURANT1_ID);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void createNotNewMenu() throws Exception {
+    @Test
+    public void testCreateNotNewMenu() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
         service.create(MENU1, RESTAURANT1_ID);
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
-    public void createByBadRestaurantId() throws Exception {
-        service.create(CREATED, RESTAURANT1_ID + 5);
+    @Test
+    public void testCreateByBadRestaurantId() throws Exception {
+        thrown.expect(DataIntegrityViolationException.class);
+        service.create(new LunchMenu(null, RESTAURANT1, LocalDate.now()), RESTAURANT1_ID + 5);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void update() throws Exception {
+    @Test
+    public void testUpdate() throws Exception {
+        thrown.expect(UnsupportedOperationException.class);
         service.update(MENU1, RESTAURANT1_ID);
     }
 
     @Test
-    public void delete() throws Exception {
+    public void testDelete() throws Exception {
         service.delete(MENU_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(MENU2), service.getWithDataByDate(LocalDate.of(2017, 06, 13)));
     }
 
-    @Test(expected = NotFoundException.class)
-    public void deleteBadID() throws Exception {
+    @Test
+    public void testDeleteBadID() throws Exception {
+        thrown.expect(NotFoundException.class);
         service.delete(MENU_ID + 5);
     }
 
     @Test
-    public void deleteBefore() throws Exception {
+    public void testDeleteBefore() throws Exception {
         service.deleteBefore(LocalDate.of(2017, 06, 13));
         MATCHER.assertCollectionEquals(Collections.emptyList(), service.getWithDataByDate(LocalDate.of(2017, 06, 12)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void deleteBeforeWithNullDate() throws Exception {
+    @Test
+    public void testDeleteBeforeWithNullDate() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
         service.deleteBefore(null);
+    }
+
+    @Test
+    public void testValidation() throws Exception {
+        thrown.expect(DataIntegrityViolationException.class);
+        service.create(new LunchMenu(null, null, Collections.emptyList()), RESTAURANT1_ID);
     }
 
     void logoutMenuWithRestaurantAndDishes(List<LunchMenu> menus) {

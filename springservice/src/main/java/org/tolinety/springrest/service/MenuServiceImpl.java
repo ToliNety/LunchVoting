@@ -4,15 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.tolinety.springrest.model.LunchMenu;
-import org.tolinety.springrest.repository.CrudMenuRepository;
 import org.tolinety.springrest.repository.MenuRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.tolinety.springrest.util.ValidationUtil.checkNew;
-import static org.tolinety.springrest.util.ValidationUtil.checkNotFound;
-import static org.tolinety.springrest.util.ValidationUtil.checkNotFoundWithId;
+import static org.tolinety.springrest.util.ValidationUtil.*;
 
 /**
  * Created by tolin on 14.06.2017.
@@ -37,6 +34,11 @@ public class MenuServiceImpl implements MenuService {
     public LunchMenu create(LunchMenu menu, int restaurantId) {
         Assert.notNull(menu, "LunchMenu mustn't be null");
         checkNew(menu);
+        menu.getDishes().forEach(dish -> {
+            if (dish.getRestaurant().getId() != restaurantId) {
+                throw new IllegalArgumentException("All dishes must be from restaurant with Id = " + restaurantId);
+            }
+        });
         return repository.save(menu, restaurantId);
     }
 
