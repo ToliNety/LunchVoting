@@ -44,14 +44,16 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     public List<Dish> getByRestaurant(int restaurantId) {
-        return dishRepository.getAllByRestaurantIdAndDeletedFalse(restaurantId);
+        return dishRepository.getDistinctByRestaurantIdAndDeletedFalse(restaurantId);
     }
 
     @Override
     @Transactional
-    public int delete(int id) {
+    public boolean delete(int id) {
         Dish dish = get(id);
+        if (dish == null) return false;
         dish.setDeleted(true);
-        return dishRepository.save(dish) != null ? 1 : 0;
+        dishRepository.save(dish);
+        return true;
     }
 }

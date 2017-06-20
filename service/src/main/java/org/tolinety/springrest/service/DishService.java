@@ -17,5 +17,5 @@ public interface DishService {
 
     Dish get (int id);
 
-    int delete(int id);
+    void delete(int id);
 }

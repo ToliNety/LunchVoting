@@ -3,7 +3,9 @@ package org.tolinety.springrest.service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.tolinety.springrest.model.Dish;
+import org.tolinety.springrest.util.NotFoundException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,8 +32,19 @@ public class DishServiceTest extends AbstractServiceTest {
     public void testCreate() throws Exception {
         Dish newDish = service.create(CREATED, RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(newDish));
-        CREATED.setId(newDish.getId());
-        MATCHER.assertEquals(CREATED, newDish);
+        MATCHER.assertCollectionEquals(Arrays.asList(DISH1, DISH2, CREATED), service.getAllByRestaurant(RESTAURANT1_ID));
+    }
+
+    @Test
+    public void testCreateBadRestaurantId() throws Exception {
+        thrown.expect(DataIntegrityViolationException.class);
+        service.create(new Dish(null, "Created", 180, null), RESTAURANT1_ID + 5);
+    }
+
+    @Test
+    public void testCreateNull() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        service.create(null, RESTAURANT1_ID);
     }
 
     @Test
@@ -40,9 +53,7 @@ public class DishServiceTest extends AbstractServiceTest {
         log.info("From DB: " + String.valueOf(updatedDish));
 
         MATCHER.assertEquals(DISH1_UPDATED, service.get(DISH_ID));
-
-        UPDATED.setId(updatedDish.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(DISH2, UPDATED), service.getAllByRestaurant(RESTAURANT1_ID));
+        MATCHER.assertCollectionEquals(Arrays.asList(DISH2, updatedDish), service.getAllByRestaurant(RESTAURANT1_ID));
     }
 
     @Test
@@ -53,9 +64,21 @@ public class DishServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void testGetNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        service.get(DISH_ID + 5);
+    }
+
+    @Test
     public void testDelete() throws Exception {
         service.delete(DISH_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(DISH2), service.getAllByRestaurant(RESTAURANT1_ID));
+    }
+
+    @Test
+    public void testDeleteNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        service.delete(DISH_ID + 5);
     }
 
 }

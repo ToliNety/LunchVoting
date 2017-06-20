@@ -44,7 +44,6 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     public void testCreate() throws Exception {
         Restaurant created = service.create(CREATED);
         log.info("From DB: " + String.valueOf(created));
-        CREATED.setId(created.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(RESTAURANT1, RESTAURANT2, CREATED), service.getAll());
     }
 

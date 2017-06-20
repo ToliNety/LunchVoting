@@ -31,7 +31,7 @@ import java.util.List;
 public class LunchMenu extends BaseEntity {
     public static final String WITH_DATA = "LunchMenu.withAllData";
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
@@ -43,7 +43,7 @@ public class LunchMenu extends BaseEntity {
     private LocalDate registered;
 
     //TODO Try to use CollectionTable
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "menus",
             joinColumns = @JoinColumn(name = "lunch_id", referencedColumnName = "id"),

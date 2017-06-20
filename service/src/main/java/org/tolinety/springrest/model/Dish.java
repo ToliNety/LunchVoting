@@ -21,7 +21,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@NamedEntityGraph(name = Dish.WITH_RESTAURANT, attributeNodes = {@NamedAttributeNode("restaurant")})
 public class Dish extends BaseEntity {
+    public static final String WITH_RESTAURANT = "Dish.withRestaurant";
+
     @NotBlank
     @Column(name = "dish_name")
     private String dishName;
@@ -33,9 +36,10 @@ public class Dish extends BaseEntity {
     @Column(name = "deleted", nullable = false, columnDefinition = "bool default false")
     private boolean deleted;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Restaurant restaurant;
 
     public Dish(Integer id, String dishName, int dishPrice, Restaurant restaurant) {

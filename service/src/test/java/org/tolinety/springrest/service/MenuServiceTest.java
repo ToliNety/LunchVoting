@@ -58,10 +58,8 @@ public class MenuServiceTest extends AbstractServiceTest {
     public void testCreate() throws Exception {
         LunchMenu created = service.create(CREATED, RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(created));
-        LunchMenu getted = service.get(created.getId());
-        log.info("From DB with dishes: " + String.valueOf(getted) + " Dishes: " + getted.getDishes());
-        CREATED.setId(created.getId());
-        MATCHER.assertEquals(CREATED, created);
+
+        MATCHER.assertCollectionEquals(Arrays.asList(CREATED), service.getWithDataByDate(CREATED.getRegistered()));
     }
 
     @Test

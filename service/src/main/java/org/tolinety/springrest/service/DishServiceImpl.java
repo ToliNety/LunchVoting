@@ -8,8 +8,7 @@ import org.tolinety.springrest.repository.DishRepository;
 
 import java.util.List;
 
-import static org.tolinety.springrest.util.ValidationUtil.checkNew;
-import static org.tolinety.springrest.util.ValidationUtil.checkNotFoundWithId;
+import static org.tolinety.springrest.util.ValidationUtil.*;
 
 /**
  * Created by tolin on 18.06.2017.
@@ -39,11 +38,12 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Dish get(int id) {
-        return repository.get(id);
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Override
-    public int delete(int id) {
-        return repository.delete(id);
+    public void delete(int id) {
+        checkNotFound(repository.delete(id), "id = " + String.valueOf(id));
+
     }
 }

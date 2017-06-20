@@ -1,10 +1,9 @@
 package org.tolinety.springrest.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 import org.tolinety.springrest.model.Dish;
-import org.tolinety.springrest.model.Restaurant;
 
 import java.util.List;
 
@@ -13,5 +12,6 @@ import java.util.List;
  */
 @Transactional(readOnly = true)
 public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
-    List<Dish> getAllByRestaurantIdAndDeletedFalse(int restaurantId);
+    @EntityGraph(value = Dish.WITH_RESTAURANT)
+    List<Dish> getDistinctByRestaurantIdAndDeletedFalse(int restaurantId);
 }

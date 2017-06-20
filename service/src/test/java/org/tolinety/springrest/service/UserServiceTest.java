@@ -23,8 +23,8 @@ public class UserServiceTest extends AbstractServiceTest {
     public void testCreate() throws Exception {
         User user = service.create(CREATED);
         log.info("From DB: " + user);
-        CREATED.setId(user.getId());
-        MATCHER.assertEquals(CREATED, user);
+
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, CREATED, USER), service.getAll());
     }
 
     @Test
@@ -54,19 +54,19 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(USER_ID);
+        service.delete(ADMIN_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(USER), service.getAll());
     }
 
     @Test
     public void testDeleteBadId() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.delete(USER_ID + 5);
+        service.delete(ADMIN_ID + 5);
     }
 
     @Test
     public void testGet() throws Exception {
-        User user = service.get(USER_ID);
+        User user = service.get(ADMIN_ID);
         log.info("From DB: " + user);
         MATCHER.assertEquals(ADMIN, user);
     }
@@ -74,7 +74,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     public void testGetBadID() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.get(USER_ID + 5);
+        service.get(ADMIN_ID + 5);
     }
 
     @Test

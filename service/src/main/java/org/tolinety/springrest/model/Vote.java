@@ -1,5 +1,6 @@
 package org.tolinety.springrest.model;
 
+import com.google.common.base.MoreObjects;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,18 +20,37 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@NamedEntityGraph(name = Vote.WITH_DATA, attributeNodes = {
+        @NamedAttributeNode("lunch"),
+        @NamedAttributeNode("user")})
 public class Vote extends BaseEntity {
-    @ManyToOne
+    public static final String WITH_DATA = "Vote.withData";
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lunch_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private LunchMenu lunch;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column(name = "registered")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate date;
+    private LocalDate registered;
+
+    public Vote(LocalDate registered) {
+        this.registered = registered;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", getId())
+                .add("lunch", lunch.getId())
+                .add("user", user.getId())
+                .add("registered", registered)
+                .toString();
+    }
 }

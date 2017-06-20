@@ -14,5 +14,5 @@ public interface DishRepository {
 
     List<Dish> getByRestaurant (int restaurantId);
 
-    int delete (int id);
+    boolean delete (int id);
 }

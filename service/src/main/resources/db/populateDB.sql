@@ -47,9 +47,9 @@ INSERT INTO menus (lunch_id, dish_id) VALUES
   (100010, 100005);
 
 -- votes
-INSERT INTO votes (lunch_id, user_id) VALUES
-  (100010, 100000),
-  (100010, 100001);
+INSERT INTO votes (lunch_id, user_id,registered) VALUES
+  (100010, 100000, '2017-06-12'),
+  (100010, 100001, '2017-06-12');
 
 INSERT INTO votes (lunch_id, user_id, registered) VALUES
   (100008, 100000, '2017-06-13'),
