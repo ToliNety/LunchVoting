@@ -28,7 +28,7 @@ public class Dish extends BaseEntity {
     @Column(name = "dish_price")
     private int dishPrice;
 
-    @Column(name = "deleted")
+    @Column(name = "deleted", nullable = false, columnDefinition = "bool default false")
     private boolean deleted;
 
     @ManyToOne

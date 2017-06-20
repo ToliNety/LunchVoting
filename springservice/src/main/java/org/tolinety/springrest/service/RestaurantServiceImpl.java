@@ -8,9 +8,7 @@ import org.tolinety.springrest.repository.RestaurantRepository;
 
 import java.util.List;
 
-import static org.tolinety.springrest.util.ValidationUtil.checkNew;
-import static org.tolinety.springrest.util.ValidationUtil.checkNotFound;
-import static org.tolinety.springrest.util.ValidationUtil.checkNotFoundWithId;
+import static org.tolinety.springrest.util.ValidationUtil.*;
 
 /**
  * Created by ToliNeTy on 04.03.2017.
@@ -46,7 +44,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void delete(int id) {
-        int result = restaurantRepository.deleteById(id);
-        checkNotFound((result != 0), String.valueOf(id));
+        checkNotFound((restaurantRepository.deleteById(id) != 0), String.valueOf(id));
     }
 }

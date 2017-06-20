@@ -50,11 +50,10 @@ CREATE TABLE menus
 CREATE TABLE users
 (
   id         INTEGER PRIMARY KEY    DEFAULT nextval('global_seq'),
-  name       VARCHAR   NOT NULL,
   email      VARCHAR   NOT NULL,
   password   VARCHAR   NOT NULL,
   registered TIMESTAMP NOT NULL     DEFAULT now(),
-  enabled    BOOL                   DEFAULT TRUE
+  deleted    BOOL                   DEFAULT FALSE
 );
 
 CREATE UNIQUE INDEX users_unique_email_idx

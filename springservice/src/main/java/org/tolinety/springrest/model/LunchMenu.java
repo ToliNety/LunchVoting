@@ -39,6 +39,7 @@ public class LunchMenu extends BaseEntity {
     @NotNull
     private LocalDate registered;
 
+    //TODO Try to use CollectionTable
     @OneToMany
     @JoinTable(
             name = "menus",
