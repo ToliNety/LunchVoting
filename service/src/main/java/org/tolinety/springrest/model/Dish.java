@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -33,6 +35,7 @@ public class Dish extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
     public Dish(Integer id, String dishName, int dishPrice, Restaurant restaurant) {

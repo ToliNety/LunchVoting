@@ -15,17 +15,17 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "votes", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"restaurant_id", "user_id", "registered"}, name = "votes_idx")})
+        @UniqueConstraint(columnNames = {"user_id", "registered"}, name = "votes_idx")})
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Vote extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "lunch_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Restaurant restaurant;
+    private LunchMenu lunch;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -31,6 +33,7 @@ public class LunchMenu extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
 
