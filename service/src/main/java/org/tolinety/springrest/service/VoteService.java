@@ -9,4 +9,8 @@ public interface VoteService {
     void vote(int userId, int lunchId, LocalDate date);
 
     void vote(int userId, int lunchId);
+
+    int countByLunch(int lunchId);
+
+    int countByRestaurant(int restaurantId);
 }

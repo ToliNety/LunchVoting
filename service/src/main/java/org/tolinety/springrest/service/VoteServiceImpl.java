@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.tolinety.springrest.model.Vote;
+import org.tolinety.springrest.repository.CrudVoteRepository;
 import org.tolinety.springrest.repository.VoteRepository;
 
 import java.time.LocalDate;
@@ -19,6 +20,9 @@ import java.time.LocalTime;
 public class VoteServiceImpl implements VoteService {
     @Autowired
     VoteRepository repository;
+
+    @Autowired
+    CrudVoteRepository crudVoteRepository;
 
     @Override
     public void vote(int userId, int lunchId) {
@@ -45,5 +49,15 @@ public class VoteServiceImpl implements VoteService {
             log.info("Vote updated: " + vote);
         }
 
+    }
+
+    @Override
+    public int countByLunch(int lunchId) {
+        return crudVoteRepository.countByLunchId(lunchId);
+    }
+
+    @Override
+    public int countByRestaurant(int restaurantId) {
+        return crudVoteRepository.countByRestaurant(restaurantId);
     }
 }

@@ -1,6 +1,5 @@
 package org.tolinety.springrest.repository;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,4 +16,9 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
 
     @Query("SELECT v FROM Vote v WHERE v.user.id = ?1 AND v.registered=?2")
     Vote get(int userId, LocalDate registered);
+
+    int countByLunchId(int lunchId);
+
+    @Query("SELECT COUNT (v) FROM Vote v LEFT JOIN FETCH Restaurant r ON v.lunch.restaurant = r WHERE r.id=?1")
+    int countByRestaurant(int restaurantId);
 }
