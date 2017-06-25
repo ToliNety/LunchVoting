@@ -1,5 +1,8 @@
 package org.tolinety.springrest.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.tolinety.springrest.to.UserTo;
 
 import javax.persistence.*;
 import java.util.*;
@@ -37,6 +41,7 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "deleted", nullable = false, columnDefinition = "bool default false")
+    @JsonIgnore
     private boolean deleted = false;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
@@ -68,5 +73,10 @@ public class User extends BaseEntity {
                 .add("deleted", deleted)
                 .add("roles", roles)
                 .toString();
+    }
+
+    public void update(UserTo userTo) {
+        this.setEmail(userTo.getEmail());
+        this.setPassword(userTo.getPassword());
     }
 }

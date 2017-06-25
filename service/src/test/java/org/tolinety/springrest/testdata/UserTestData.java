@@ -3,6 +3,7 @@ package org.tolinety.springrest.testdata;
 import org.tolinety.springrest.ModelMatcher;
 import org.tolinety.springrest.model.Role;
 import org.tolinety.springrest.model.User;
+import org.tolinety.springrest.to.UserTo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +24,6 @@ public class UserTestData {
 
     public static final List<User> USERS = Arrays.asList(ADMIN, USER);
 
-    public static final User CREATED = new User("new@mail.ru", "newPassword");
-    public static final User UPDATED = new User(ADMIN_ID + 1, "updatedUser@yandex.ru", "updatedUser", Role.ROLE_USER);
+    public static final UserTo CREATED = new UserTo("new@mail.ru", "newPassword");
+    public static final UserTo UPDATED = new UserTo("updatedUser@yandex.ru", "updatedUser");
 }

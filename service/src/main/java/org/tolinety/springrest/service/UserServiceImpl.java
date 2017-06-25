@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.tolinety.springrest.model.User;
 import org.tolinety.springrest.repository.UserRepository;
+import org.tolinety.springrest.to.UserTo;
 
 import java.util.List;
 
-import static org.tolinety.springrest.util.ValidationUtil.*;
+import static org.tolinety.springrest.to.UserTo.getFromTo;
+import static org.tolinety.springrest.util.ValidationUtil.checkNotFound;
+import static org.tolinety.springrest.util.ValidationUtil.checkNotFoundWithId;
 
 /**
  * Created by tolin on 20.06.2017.
@@ -19,16 +22,16 @@ public class UserServiceImpl implements UserService {
     UserRepository repository;
 
     @Override
-    public User create(User user) {
-        Assert.notNull(user, "User mustn't be null");
-        checkNew(user);
-        return repository.save(user);
+    public User create(UserTo userTo) {
+        Assert.notNull(userTo, "User mustn't be null");
+        return repository.save(getFromTo(userTo));
     }
 
     @Override
-    public User update(User user) {
-        Assert.notNull(user, "User mustn't be null");
-        checkNotFoundWithId(get(user.getId()), user.getId());
+    public User update(UserTo userTo, int id) {
+        Assert.notNull(userTo, "User mustn't be null");
+        User user = checkNotFoundWithId(get(id), id);
+        user.update(userTo);
         return repository.save(user);
     }
 

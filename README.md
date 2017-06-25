@@ -35,6 +35,8 @@ Get all
 Get by id
 `curl http://localhost:8080/testapp/lunches/100008`
 
+**_Vote and ratings_**
+
 Vote
 `curl -X PUT http://localhost:8080/testapp/lunches/100008`
 
@@ -46,7 +48,7 @@ Get rating by lunch
 
 **ADMIN commands**
 
-**_Restaurants_**
+**_Edit restaurants_**
 
 GetAll
 `curl http://localhost:8080/testapp/restaurants`
@@ -63,7 +65,7 @@ GetByID (Restaurant2)
 Update (Restaurant2)
 `curl -H 'Content-Type: application/json' -X PUT -d '{"name": "RestaurantUpdated", "id": 100003}' http://localhost:8080/testapp/restaurants/100003`
 
-**_Dishes_**
+**_Edit dishes by restaurant_**
 
 GetAll
 `curl http://localhost:8080/testapp/restaurants/100003/dishes`
@@ -80,7 +82,7 @@ GetByID
 Update
 `curl -H 'Content-Type: application/json' -X PUT -d '{"dishName":"Dish1R2Updated","dishPrice":350}' http://localhost:8080/testapp/restaurants/100003/dishes/100007`
 
-**_Lunches_**
+**_Edit lunches by restaurant_**
 
 GetAll
 `curl http://localhost:8080/testapp/restaurants/100003/lunches`
@@ -93,3 +95,20 @@ Delete
 
 GetByID
 `curl http://localhost:8080/testapp/restaurants/100003/lunches/100009`
+
+**_Edit users_**
+
+GetAll
+`curl http://localhost:8080/testapp/admin`
+
+Create new
+`curl -H 'Content-Type: application/json' -X POST -d '{"email":"new@mail.ru", "password":"newPassword"}' http://localhost:8080/testapp/admin`
+
+Update
+`curl -H 'Content-Type: application/json' -X POST -d '{"email":"updated@mail.ru", "updatedpassword":"newPassword"}' http://localhost:8080/testapp/admin/100000`
+
+Delete
+`curl -X DELETE http://localhost:8080/testapp/admin/100001`
+
+GetByID
+`curl http://localhost:8080/testapp/admin/100000`

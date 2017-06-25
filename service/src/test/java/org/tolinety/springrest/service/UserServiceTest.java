@@ -24,13 +24,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User user = service.create(CREATED);
         log.info("From DB: " + user);
 
-        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, CREATED, USER), service.getAll());
-    }
-
-    @Test
-    public void testCreateNotNew() throws Exception {
-        thrown.expect(IllegalArgumentException.class);
-        service.create(UPDATED);
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, user, USER), service.getAll());
     }
 
     @Test
@@ -41,15 +35,15 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testUpdate() throws Exception {
-        User user = service.update(UPDATED);
+        User user = service.update(UPDATED, USER_ID);
         log.info("From DB: " + user);
-        MATCHER.assertEquals(UPDATED, user);
+        MATCHER.assertEquals(user, service.get(USER_ID));
     }
 
     @Test
     public void testUpdateNull() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        service.update(null);
+        service.update(null, USER_ID);
     }
 
     @Test
