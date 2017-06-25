@@ -52,7 +52,6 @@ public class DishServiceTest extends AbstractServiceTest {
         Dish updatedDish = service.update(UPDATED, DISH_ID, RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(updatedDish));
 
-        MATCHER.assertEquals(DISH1_UPDATED, service.get(DISH_ID));
         MATCHER.assertCollectionEquals(Arrays.asList(DISH2, updatedDish), service.getAllByRestaurant(RESTAURANT1_ID));
     }
 
@@ -77,8 +76,8 @@ public class DishServiceTest extends AbstractServiceTest {
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(DISH_ID);
-        MATCHER.assertCollectionEquals(Arrays.asList(DISH2), service.getAllByRestaurant(RESTAURANT1_ID));
+        service.delete(DISH_ID + 1);
+        MATCHER.assertCollectionEquals(Arrays.asList(DISH1), service.getAllByRestaurant(RESTAURANT1_ID));
     }
 
     @Test

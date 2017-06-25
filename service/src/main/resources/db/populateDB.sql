@@ -10,8 +10,8 @@ ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 -- users
 INSERT INTO users (email, password) VALUES
-  ('admin@gmail.com', 'admin'),
-  ('user@yandex.ru', 'user');
+  ('admin@gmail.com', '$2a$10$viEWQN2D2MFdGoft/HLYzu8d/Wd2dLVkTVNyBv.iufznqDm35/Xh6'),
+  ('user@yandex.ru', '$2a$10$OJ0bW3eEgvLgWtPEsZiC0OtOP5ly0btGlWB2IdPijzvTArV31faQq');
 
 -- user_roles
 INSERT INTO user_roles (role, user_id) VALUES

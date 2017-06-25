@@ -1,4 +1,4 @@
-package org.tolinety.springrest.web.json;
+package org.tolinety.springrest.json;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

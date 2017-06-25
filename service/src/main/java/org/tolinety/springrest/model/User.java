@@ -1,8 +1,6 @@
 package org.tolinety.springrest.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,7 +67,6 @@ public class User extends BaseEntity {
         return MoreObjects.toStringHelper(this)
                 .add("id", getId())
                 .add("email", email)
-                .add("password", password)
                 .add("deleted", deleted)
                 .add("roles", roles)
                 .toString();

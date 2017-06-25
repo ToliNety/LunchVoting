@@ -1,4 +1,4 @@
-package org.tolinety.springrest.web.json;
+package org.tolinety.springrest.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.IOException;
 import java.util.List;
 
-import static org.tolinety.springrest.web.json.JacksonObjectMapper.getMapper;
+import static org.tolinety.springrest.json.JacksonObjectMapper.getMapper;
 
 /**
  * User: gkislin

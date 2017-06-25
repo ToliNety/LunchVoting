@@ -1,7 +1,7 @@
 package org.tolinety.springrest.util;
 
 import lombok.NoArgsConstructor;
-import org.tolinety.springrest.HasId;
+import org.tolinety.springrest.model.HasId;
 
 /**
  * Created by tolin on 10.06.2017.

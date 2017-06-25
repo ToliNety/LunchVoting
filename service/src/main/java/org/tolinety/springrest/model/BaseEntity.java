@@ -1,7 +1,6 @@
 package org.tolinety.springrest.model;
 
 import org.hibernate.Hibernate;
-import org.tolinety.springrest.HasId;
 
 import javax.persistence.*;
 

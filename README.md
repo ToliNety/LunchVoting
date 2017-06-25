@@ -30,85 +30,85 @@ As a result, provide a link to github repository. It should contain the code, RE
 **_Lunches_**
 
 Get all
-`curl http://localhost:8080/testapp/lunches`
+`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches`
 
 Get by id
-`curl http://localhost:8080/testapp/lunches/100008`
+`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/100008`
 
 **_Vote and ratings_**
 
 Vote
-`curl -X PUT http://localhost:8080/testapp/lunches/100008`
+`curl -u user@yandex.ru:user -X PUT http://localhost:8080/testapp/lunches/100015`
 
 Get rating by restaurant 
-`curl http://localhost:8080/testapp/lunches/ratingByRestaurant?restaurant=100003`
+`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/ratingByRestaurant?restaurant=100003`
 
 Get rating by lunch 
-`curl http://localhost:8080/testapp/lunches/ratingByLunch?lunch=100009`
+`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/ratingByLunch?lunch=100015`
 
 **ADMIN commands**
 
 **_Edit restaurants_**
 
 GetAll
-`curl http://localhost:8080/testapp/restaurants`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants`
 
 Create new
-`curl -H 'Content-Type: application/json' -X POST -d '{"name": "RestaurantNew"}' http://localhost:8080/testapp/restaurants`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"name": "RestaurantNew"}' http://localhost:8080/testapp/restaurants`
 
 Delete (Restaurant1)
-`curl -X DELETE http://localhost:8080/testapp/restaurants/100002`
+`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100002`
 
 GetByID (Restaurant2)
-`curl http://localhost:8080/testapp/restaurants/100003`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003`
 
 Update (Restaurant2)
-`curl -H 'Content-Type: application/json' -X PUT -d '{"name": "RestaurantUpdated", "id": 100003}' http://localhost:8080/testapp/restaurants/100003`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X PUT -d '{"name": "RestaurantUpdated", "id": 100003}' http://localhost:8080/testapp/restaurants/100003`
 
 **_Edit dishes by restaurant_**
 
 GetAll
-`curl http://localhost:8080/testapp/restaurants/100003/dishes`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/dishes`
 
 Create new
-`curl -H 'Content-Type: application/json' -X POST -d '{"dishName":"Dish3R2","dishPrice":133}' http://localhost:8080/testapp/restaurants/100003/dishes`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"dishName":"Dish3R2","dishPrice":133}' http://localhost:8080/testapp/restaurants/100003/dishes`
 
 Delete
-`curl -X DELETE http://localhost:8080/testapp/restaurants/100003/dishes/100006`
+`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100003/dishes/100006`
 
 GetByID
-`curl http://localhost:8080/testapp/restaurants/100003/dishes/100007`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/dishes/100007`
 
 Update
-`curl -H 'Content-Type: application/json' -X PUT -d '{"dishName":"Dish1R2Updated","dishPrice":350}' http://localhost:8080/testapp/restaurants/100003/dishes/100007`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X PUT -d '{"dishName":"Dish1R2Updated","dishPrice":350}' http://localhost:8080/testapp/restaurants/100003/dishes/100007`
 
 **_Edit lunches by restaurant_**
 
 GetAll
-`curl http://localhost:8080/testapp/restaurants/100003/lunches`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/lunches`
 
 Create new
-`curl -H 'Content-Type: application/json' -X POST -d '{"disheIds":[100006, 100007]}' http://localhost:8080/testapp/restaurants/100003/lunches`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"disheIds":[100006, 100007]}' http://localhost:8080/testapp/restaurants/100003/lunches`
 
 Delete
-`curl -X DELETE http://localhost:8080/testapp/restaurants/100002/lunches/100010`
+`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100002/lunches/100010`
 
 GetByID
-`curl http://localhost:8080/testapp/restaurants/100003/lunches/100009`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/lunches/100009`
 
 **_Edit users_**
 
 GetAll
-`curl http://localhost:8080/testapp/admin`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/admin`
 
 Create new
-`curl -H 'Content-Type: application/json' -X POST -d '{"email":"new@mail.ru", "password":"newPassword"}' http://localhost:8080/testapp/admin`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"email":"new@mail.ru", "password":"newPassword"}' http://localhost:8080/testapp/admin`
 
 Update
-`curl -H 'Content-Type: application/json' -X POST -d '{"email":"updated@mail.ru", "updatedpassword":"newPassword"}' http://localhost:8080/testapp/admin/100000`
+`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"email":"updated@mail.ru", "updatedpassword":"newPassword"}' http://localhost:8080/testapp/admin/100000`
 
 Delete
-`curl -X DELETE http://localhost:8080/testapp/admin/100001`
+`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/admin/100001`
 
 GetByID
-`curl http://localhost:8080/testapp/admin/100000`
+`curl -u admin@gmail.com:admin http://localhost:8080/testapp/admin/100000`

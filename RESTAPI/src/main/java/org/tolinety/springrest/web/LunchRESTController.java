@@ -3,6 +3,7 @@ package org.tolinety.springrest.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.tolinety.springrest.AuthorizedUser;
 import org.tolinety.springrest.model.LunchMenu;
 import org.tolinety.springrest.service.LunchService;
 import org.tolinety.springrest.service.VoteService;

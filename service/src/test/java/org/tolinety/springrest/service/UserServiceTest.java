@@ -90,5 +90,4 @@ public class UserServiceTest extends AbstractServiceTest {
         log.info("From DB: " + users);
         MATCHER.assertCollectionEquals(USERS, users);
     }
-
 }

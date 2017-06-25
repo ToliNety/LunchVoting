@@ -1,4 +1,4 @@
-package org.tolinety.springrest;
+package org.tolinety.springrest.model;
 
 /**
  * Created by ToliNeTy on 05.03.2017.
