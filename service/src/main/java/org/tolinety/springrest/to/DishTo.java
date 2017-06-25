@@ -3,6 +3,7 @@ package org.tolinety.springrest.to;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.tolinety.springrest.model.Dish;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,8 @@ public class DishTo {
     private String dishName;
 
     @NotNull
-    private int dishPrice;
+    @Range(min = 100)
+    private Integer dishPrice;
 
     public static Dish getFromTo(DishTo dishTo) {
         return getFromTo(dishTo, null);

@@ -7,6 +7,9 @@ import org.tolinety.springrest.model.Dish;
 
 import java.util.List;
 
+import static org.tolinety.springrest.util.ValidationUtil.checkNotFound;
+import static org.tolinety.springrest.util.ValidationUtil.checkNotFoundWithId;
+
 /**
  * Created by tolin on 18.06.2017.
  */
@@ -26,7 +29,7 @@ public class DishRepositoryImpl implements DishRepository {
         if (dish.isNew()) {
             newDish = dishRepository.save(dish);
         } else {
-            Dish oldDish = get(dish.getId());
+            Dish oldDish = checkNotFoundWithId(get(dish.getId()), dish.getId());
             if (oldDish.getRestaurant().getId() == restaurantId) {
                 newDish = dishRepository.save(Dish.of(dish));
                 oldDish.setDeleted(true);
@@ -39,7 +42,7 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     public Dish get(int id) {
-        return dishRepository.findOne(id);
+        return dishRepository.getByIdAndAndDeletedFalse(id);
     }
 
     @Override

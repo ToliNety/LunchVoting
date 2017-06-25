@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +32,9 @@ public class Dish extends BaseEntity {
     private String dishName;
 
     @Column(name = "dish_price")
-    private int dishPrice;
+    @Range(min = 100)
+    @NotNull
+    private Integer dishPrice;
 
     @Column(name = "deleted", nullable = false, columnDefinition = "bool default false")
     @JsonIgnore

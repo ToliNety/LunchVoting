@@ -14,6 +14,7 @@ import org.tolinety.springrest.service.RestaurantService;
 import org.tolinety.springrest.to.DishTo;
 import org.tolinety.springrest.to.LunchTo;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class RestaurantRESTController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = restaurantService.create(restaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -56,7 +57,7 @@ public class RestaurantRESTController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateRestaurant(@RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void updateRestaurant(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         restaurantService.update(restaurant);
     }
 
@@ -76,7 +77,7 @@ public class RestaurantRESTController {
     }
 
     @PostMapping(value = "/{id}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> addDish(@PathVariable int id, @RequestBody DishTo dishTo) {
+    public ResponseEntity<Dish> addDish(@PathVariable int id, @Valid @RequestBody DishTo dishTo) {
         Dish created = dishService.create(dishTo, id);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -87,7 +88,7 @@ public class RestaurantRESTController {
     }
 
     @PutMapping(value = "/{id}/dishes/{dishId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateDish(@PathVariable("id") int restaurantId, @PathVariable("dishId") int dishId, @RequestBody DishTo dishTo) {
+    public void updateDish(@PathVariable("id") int restaurantId, @PathVariable("dishId") int dishId, @Valid @RequestBody DishTo dishTo) {
         dishService.update(dishTo, dishId, restaurantId);
     }
 
@@ -107,7 +108,7 @@ public class RestaurantRESTController {
     }
 
     @PostMapping(value = "/{id}/lunches", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LunchMenu> addLunch(@PathVariable("id") int restaurantId, @RequestBody LunchTo lunchTo) {
+    public ResponseEntity<LunchMenu> addLunch(@PathVariable("id") int restaurantId, @Valid @RequestBody LunchTo lunchTo) {
         LunchMenu created = lunchService.create(lunchTo, restaurantId);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

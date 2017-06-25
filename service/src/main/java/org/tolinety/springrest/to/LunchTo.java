@@ -3,9 +3,12 @@ package org.tolinety.springrest.to;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.tolinety.springrest.model.Dish;
 import org.tolinety.springrest.model.LunchMenu;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,7 +17,10 @@ import java.util.List;
  */
 @Data
 public class LunchTo {
+
     private LocalDate registered;
+
+    @NotEmpty
     private int[] disheIds;
 
     @JsonCreator
