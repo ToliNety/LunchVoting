@@ -18,6 +18,9 @@ public interface CrudMenuRepository extends JpaRepository<LunchMenu, Integer> {
     List<LunchMenu> getDistinctByRegistered(LocalDate date);
 
     @EntityGraph(value = LunchMenu.WITH_DATA)
+    List<LunchMenu> getDistinctByRestaurantId(int restaurantId);
+
+    @EntityGraph(value = LunchMenu.WITH_DATA)
     LunchMenu getById(int id);
 
     @Modifying

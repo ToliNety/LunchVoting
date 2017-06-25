@@ -45,4 +45,9 @@ public class MenuRepositoryImpl implements MenuRepository {
     public List<LunchMenu> getByDate(LocalDate date) {
         return menuRepository.getDistinctByRegistered(date);
     }
+
+    @Override
+    public List<LunchMenu> getByRestaurant(int restaurantId) {
+        return menuRepository.getDistinctByRestaurantId(restaurantId);
+    }
 }

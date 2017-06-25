@@ -12,6 +12,5 @@ import java.util.List;
  */
 @Transactional(readOnly = true)
 public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
-    @EntityGraph(value = Dish.WITH_RESTAURANT)
     List<Dish> getDistinctByRestaurantIdAndDeletedFalse(int restaurantId);
 }

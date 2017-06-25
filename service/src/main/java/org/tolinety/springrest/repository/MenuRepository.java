@@ -24,4 +24,6 @@ public interface MenuRepository {
     default LunchMenu update (LunchMenu menu, int restaurantId){
         throw new UnsupportedOperationException();
     }
+
+    List<LunchMenu> getByRestaurant(int restaurantId);
 }

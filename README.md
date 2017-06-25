@@ -20,3 +20,76 @@ Each restaurant provides new menu each day.
 As a result, provide a link to github repository. It should contain the code, README.md with API documentation and couple curl commands to test it.
 
 -----------------------------
+
+## API documentation
+
+***_curl command examples:_
+
+**USER commands**
+
+**_Lunches_**
+
+Get all
+`curl http://localhost:8080/testapp/lunches`
+
+Get by id
+`curl http://localhost:8080/testapp/lunches/100008`
+
+Vote
+`curl -X PUT http://localhost:8080/testapp/lunches/100008`
+
+Get rating by restaurant 
+`curl http://localhost:8080/testapp/lunches/ratingByRestaurant?restaurant=100003`
+
+Get rating by lunch 
+`curl http://localhost:8080/testapp/lunches/ratingByLunch?lunch=100009`
+
+**ADMIN commands**
+
+**_Restaurants_**
+
+GetAll
+`curl http://localhost:8080/testapp/restaurants`
+
+Create new
+`curl -H 'Content-Type: application/json' -X POST -d '{"name": "RestaurantNew"}' http://localhost:8080/testapp/restaurants`
+
+Delete (Restaurant1)
+`curl -X DELETE http://localhost:8080/testapp/restaurants/100002`
+
+GetByID (Restaurant2)
+`curl http://localhost:8080/testapp/restaurants/100003`
+
+Update (Restaurant2)
+`curl -H 'Content-Type: application/json' -X PUT -d '{"name": "RestaurantUpdated", "id": 100003}' http://localhost:8080/testapp/restaurants/100003`
+
+**_Dishes_**
+
+GetAll
+`curl http://localhost:8080/testapp/restaurants/100003/dishes`
+
+Create new
+`curl -H 'Content-Type: application/json' -X POST -d '{"dishName":"Dish3R2","dishPrice":133}' http://localhost:8080/testapp/restaurants/100003/dishes`
+
+Delete
+`curl -X DELETE http://localhost:8080/testapp/restaurants/100003/dishes/100006`
+
+GetByID
+`curl http://localhost:8080/testapp/restaurants/100003/dishes/100007`
+
+Update
+`curl -H 'Content-Type: application/json' -X PUT -d '{"dishName":"Dish1R2Updated","dishPrice":350}' http://localhost:8080/testapp/restaurants/100003/dishes/100007`
+
+**_Lunches_**
+
+GetAll
+`curl http://localhost:8080/testapp/restaurants/100003/lunches`
+
+Create new
+`curl -H 'Content-Type: application/json' -X POST -d '{"disheIds":[100006, 100007]}' http://localhost:8080/testapp/restaurants/100003/lunches`
+
+Delete
+`curl -X DELETE http://localhost:8080/testapp/restaurants/100002/lunches/100010`
+
+GetByID
+`curl http://localhost:8080/testapp/restaurants/100003/lunches/100009`

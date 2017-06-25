@@ -32,13 +32,13 @@ public class DishServiceTest extends AbstractServiceTest {
     public void testCreate() throws Exception {
         Dish newDish = service.create(CREATED, RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(newDish));
-        MATCHER.assertCollectionEquals(Arrays.asList(DISH1, DISH2, CREATED), service.getAllByRestaurant(RESTAURANT1_ID));
+        MATCHER.assertCollectionEquals(Arrays.asList(DISH1, DISH2, newDish), service.getAllByRestaurant(RESTAURANT1_ID));
     }
 
     @Test
     public void testCreateBadRestaurantId() throws Exception {
         thrown.expect(DataIntegrityViolationException.class);
-        service.create(new Dish(null, "Created", 180, null), RESTAURANT1_ID + 5);
+        service.create(CREATED, RESTAURANT1_ID + 5);
     }
 
     @Test
@@ -49,11 +49,17 @@ public class DishServiceTest extends AbstractServiceTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Dish updatedDish = service.update(UPDATED, RESTAURANT1_ID);
+        Dish updatedDish = service.update(UPDATED, DISH_ID, RESTAURANT1_ID);
         log.info("From DB: " + String.valueOf(updatedDish));
 
         MATCHER.assertEquals(DISH1_UPDATED, service.get(DISH_ID));
         MATCHER.assertCollectionEquals(Arrays.asList(DISH2, updatedDish), service.getAllByRestaurant(RESTAURANT1_ID));
+    }
+
+    @Test
+    public void testUpdateWithBadRestaurant() throws Exception {
+        thrown.expect(NotFoundException.class);
+        service.update(UPDATED, DISH_ID, RESTAURANT1_ID + 5);
     }
 
     @Test

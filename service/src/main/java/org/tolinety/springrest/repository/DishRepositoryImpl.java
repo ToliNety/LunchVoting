@@ -22,12 +22,12 @@ public class DishRepositoryImpl implements DishRepository {
     @Transactional
     public Dish save(Dish dish, int restaurantId) {
         Dish newDish = null;
+        dish.setRestaurant(restaurantRepository.getOne(restaurantId));
         if (dish.isNew()) {
-            dish.setRestaurant(restaurantRepository.getOne(restaurantId));
             newDish = dishRepository.save(dish);
         } else {
             Dish oldDish = get(dish.getId());
-            if (oldDish.getRestaurant().getId() == restaurantId && dish.getRestaurant().getId() == restaurantId) {
+            if (oldDish.getRestaurant().getId() == restaurantId) {
                 newDish = dishRepository.save(Dish.of(dish));
                 oldDish.setDeleted(true);
                 dishRepository.save(oldDish);

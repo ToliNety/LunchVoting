@@ -1,5 +1,6 @@
 package org.tolinety.springrest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,17 +30,17 @@ public class Dish extends BaseEntity {
     @Column(name = "dish_name")
     private String dishName;
 
-    @NotNull
     @Column(name = "dish_price")
     private int dishPrice;
 
     @Column(name = "deleted", nullable = false, columnDefinition = "bool default false")
+    @JsonIgnore
     private boolean deleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+    @JsonIgnore
     private Restaurant restaurant;
 
     public Dish(Integer id, String dishName, int dishPrice, Restaurant restaurant) {

@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.tolinety.springrest.model.Dish;
 import org.tolinety.springrest.repository.DishRepository;
+import org.tolinety.springrest.to.DishTo;
 
 import java.util.List;
 
-import static org.tolinety.springrest.util.ValidationUtil.*;
+import static org.tolinety.springrest.to.DishTo.getFromTo;
+import static org.tolinety.springrest.util.ValidationUtil.checkNotFound;
+import static org.tolinety.springrest.util.ValidationUtil.checkNotFoundWithId;
 
 /**
  * Created by tolin on 18.06.2017.
@@ -24,16 +27,15 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Dish create(Dish dish, int restaurantId) {
-        Assert.notNull(dish);
-        checkNew(dish);
-        return checkNotFoundWithId(repository.save(dish, restaurantId), restaurantId);
+    public Dish create(DishTo dishTo, int restaurantId) {
+        Assert.notNull(dishTo);
+        return checkNotFoundWithId(repository.save(getFromTo(dishTo), restaurantId), restaurantId);
     }
 
     @Override
-    public Dish update(Dish dish, int restaurantId) {
-        Assert.notNull(dish);
-        return checkNotFoundWithId(repository.save(dish, restaurantId), restaurantId);
+    public Dish update(DishTo dishTo, int dishId, int restaurantId) {
+        Assert.notNull(dishTo);
+        return checkNotFound(repository.save(getFromTo(dishTo, dishId), restaurantId), "restaurant id = " + restaurantId);
     }
 
     @Override
