@@ -25,4 +25,6 @@ public interface LunchService {
     void delete (int id);
 
     void deleteBefore (LocalDate date);
+
+    void evictCache();
 }

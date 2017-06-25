@@ -1,9 +1,11 @@
 package org.tolinety.springrest.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tolinety.springrest.model.User;
+import org.tolinety.springrest.util.JpaUtil;
 import org.tolinety.springrest.util.NotFoundException;
 
 import java.util.Arrays;
@@ -18,6 +20,14 @@ import static org.tolinety.springrest.testdata.UserTestData.*;
 public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     UserService service;
+
+    @Autowired
+    private JpaUtil jpaUtil;
+
+    @Before
+    public void setUp() throws Exception {
+        jpaUtil.clear2ndLevelHibernateCache();
+    }
 
     @Test
     public void testCreate() throws Exception {

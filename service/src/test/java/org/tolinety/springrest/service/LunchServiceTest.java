@@ -1,6 +1,7 @@
 package org.tolinety.springrest.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tolinety.springrest.model.LunchMenu;
@@ -21,6 +22,11 @@ import static org.tolinety.springrest.testdata.RestaurantTestData.RESTAURANT1_ID
 public class LunchServiceTest extends AbstractServiceTest {
     @Autowired
     LunchService service;
+
+    @Before
+    public void setUp() throws Exception {
+        service.evictCache();
+    }
 
     @Test
     public void testGetByDate() throws Exception {

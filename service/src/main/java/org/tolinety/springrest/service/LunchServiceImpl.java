@@ -1,6 +1,8 @@
 package org.tolinety.springrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -31,6 +33,7 @@ public class LunchServiceImpl implements LunchService {
     DishRepository dishRepository;
 
     @Override
+    @Cacheable("lunches")
     public List<LunchMenu> getAllByDate(LocalDate date) {
         Assert.notNull(date, "Date mustn't be null");
         return repository.getByDate(date);
@@ -48,9 +51,10 @@ public class LunchServiceImpl implements LunchService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "lunches", allEntries = true)
     public LunchMenu create(LunchTo lunchTo, int restaurantId) {
         Assert.notNull(lunchTo, "LunchMenu mustn't be null");
-        List<Dish> dishes = new ArrayList<>()   ;
+        List<Dish> dishes = new ArrayList<>();
 
         IntStream.of(lunchTo.getDisheIds()).forEach(i -> {
             Dish dish = checkNotFound(dishRepository.get(i), "dish id=" + i);
@@ -64,15 +68,23 @@ public class LunchServiceImpl implements LunchService {
     }
 
     @Override
+    @CacheEvict(value = "lunches", allEntries = true)
     public void delete(int id) {
         int result = repository.delete(id);
         checkNotFound((result != 0), "id = " + String.valueOf(id));
     }
 
     @Override
+    @CacheEvict(value = "lunches", allEntries = true)
     public void deleteBefore(LocalDate date) {
         Assert.notNull(date, "Date mustn't be null");
         int result = repository.deleteBefore(date);
         checkNotFound((result != 0), "date before = " + String.valueOf(date));
+    }
+
+    @Override
+    @CacheEvict(value = "lunches", allEntries = true)
+    public void evictCache() {
+
     }
 }
