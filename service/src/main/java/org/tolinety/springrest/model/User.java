@@ -39,6 +39,7 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false)
     @NotBlank
     @Length(min = 5)
+    @JsonIgnore
     private String password;
 
     @Column(name = "deleted", nullable = false, columnDefinition = "bool default false")

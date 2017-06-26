@@ -23,92 +23,85 @@ As a result, provide a link to github repository. It should contain the code, RE
 
 ## API documentation
 
-***_curl command examples:_
+There are 2 types of Users: User and Admin. Admin has rights to edit data. User can get lunches for current day, ratings for restaurants or lunches and vote for them.
+Only authenticated users can access REST resources (basic http authentication is used). 
 
-**USER commands**
+All resources accept HTTP methods GET (get entity or list of entities), POST (create new entity), PUT (update entity), DELETE (delete entity by id)
 
-**_Lunches_**
+There are 3 main resources:
+* Restaurants (only for Admin)
+    - Lunches of selected restaurant
+    - Dishes of selected restaurant
+* Users (only for Admin)
+* Lunches (for all Users)
 
-Get all
-`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches`
 
-Get by id
-`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/100008`
+**Commands examples**
 
-**_Vote and ratings_**
+**_Restaurants resource_**
 
-Vote
-`curl -u user@yandex.ru:user -X PUT http://localhost:8080/testapp/lunches/100015`
+* Show All
+    - `GET /restaurants`
+    - `curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants`
+* Create new
+    - `POST /restaurants`
+    - `curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"name": "RestaurantNew"}' http://localhost:8080/testapp/restaurants`
+* Delete
+    - `DELETE /restaurants/{id}`
+    - `curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100015`
 
-Get rating by restaurant 
-`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/ratingByRestaurant?restaurant=100003`
+**_Dishes of selected restaurant resource_**
 
-Get rating by lunch 
-`curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/ratingByLunch?lunch=100015`
+* Show All
+    - `GET /restaurants/{restaurantId}/dishes`
+    - `curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/dishes`
+* Create new
+    - `POST /restaurants/{restaurantId}/dishes`
+    - `curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"dishName":"Dish3R2","dishPrice":133}' http://localhost:8080/testapp/restaurants/100003/dishes`
+* Delete
+    - `DELETE /restaurants/{restaurantId}/dishes/{dishId}`
+    - `curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100003/dishes/100006`
+    - ** _Dish updated (not deleted from DB), set deleted field = true._
 
-**ADMIN commands**
+**_Lunches of selected restaurant resource_**
 
-**_Edit restaurants_**
+* Show All Lunches
+    - `GET /restaurants/{restaurantId}/lunches`
+    - `curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/lunches`
+* Create new
+    - `POST /restaurants/100003/lunches`
+    - `curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"disheIds":[100006, 100007]}' http://localhost:8080/testapp/restaurants/100003/lunches`
+    - **Lunch created for current day with selected dishes (dishIds are used). Update Lunch is not permitted. Lunch can be deleted and than created new lunch. 
 
-GetAll
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants`
+**_Users resource_**
 
-Create new
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"name": "RestaurantNew"}' http://localhost:8080/testapp/restaurants`
+* Show All
+    - `GET /admin`
+    - `curl -u admin@gmail.com:admin http://localhost:8080/testapp/admin`
+* Create
+    - `POST /admin`
+    - `curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"email":"new@mail.ru", "password":"newPassword"}' http://localhost:8080/testapp/admin`
+* Update
+    - `PUT /admin/{userId}`
+    - `curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X PUT -d '{"email":"updated@mail.ru", "updatedpassword":"newPassword"}' http://localhost:8080/testapp/admin/100000`
+* Delete
+    - `DELETE /admin/{userId}`
+    - `curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/admin/100001`
 
-Delete (Restaurant1)
-`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100002`
+**_Lunches resource_**
 
-GetByID (Restaurant2)
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003`
-
-Update (Restaurant2)
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X PUT -d '{"name": "RestaurantUpdated", "id": 100003}' http://localhost:8080/testapp/restaurants/100003`
-
-**_Edit dishes by restaurant_**
-
-GetAll
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/dishes`
-
-Create new
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"dishName":"Dish3R2","dishPrice":133}' http://localhost:8080/testapp/restaurants/100003/dishes`
-
-Delete
-`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100003/dishes/100006`
-
-GetByID
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/dishes/100007`
-
-Update
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X PUT -d '{"dishName":"Dish1R2Updated","dishPrice":350}' http://localhost:8080/testapp/restaurants/100003/dishes/100007`
-
-**_Edit lunches by restaurant_**
-
-GetAll
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/lunches`
-
-Create new
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"disheIds":[100006, 100007]}' http://localhost:8080/testapp/restaurants/100003/lunches`
-
-Delete
-`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/restaurants/100002/lunches/100010`
-
-GetByID
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/restaurants/100003/lunches/100009`
-
-**_Edit users_**
-
-GetAll
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/admin`
-
-Create new
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"email":"new@mail.ru", "password":"newPassword"}' http://localhost:8080/testapp/admin`
-
-Update
-`curl -u admin@gmail.com:admin -H 'Content-Type: application/json' -X POST -d '{"email":"updated@mail.ru", "updatedpassword":"newPassword"}' http://localhost:8080/testapp/admin/100000`
-
-Delete
-`curl -u admin@gmail.com:admin -X DELETE http://localhost:8080/testapp/admin/100001`
-
-GetByID
-`curl -u admin@gmail.com:admin http://localhost:8080/testapp/admin/100000`
+* Show all lunches with it restaurant and dishes to current day
+    - `GET /lunches`
+    - `curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches`
+* Show selected lunch
+    - `GET /lunches/{lunchId}`
+    - `curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/100008`
+* Vote to selected lunch (restaurant)
+    - `PUT /lunches/{lunchId}`
+    - `curl -u user@yandex.ru:user -X PUT http://localhost:8080/testapp/lunches/100008`
+* Show restaurant's rating 
+    - `GET /lunches/ratingByRestaurant?restaurant={restaurantId}`
+    - `curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/ratingByRestaurant?restaurant=100003`
+* Show current lunch rating 
+    - `GET /lunches/ratingByLunch?lunch={lunchId}`
+    - `curl -u user@yandex.ru:user http://localhost:8080/testapp/lunches/ratingByLunch?lunch=100008`
